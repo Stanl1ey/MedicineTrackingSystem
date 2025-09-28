@@ -61,15 +61,15 @@ window.onload = function () {
     }
 };
 
-// Medicine History (tracking user actions)
-const medicineHistory = JSON.parse(localStorage.getItem("medicineHistory")) || [];
-function addHistory(action) {
-    medicineHistory.push({
-        action,
-        timestamp: new Date().toLocaleString()
-    });
-    localStorage.setItem("medicineHistory", JSON.stringify(medicineHistory));
-}
+// Handle logout
+const logoutButton = document.getElementById("logoutButton");
+
+logoutButton.addEventListener("click", function () {
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    alert("You have been logged out.");
+    window.location.href = "login.html"; // Redirect to login page
+});
 
 // Handle adding medicine
 const medicineForm = document.getElementById("medicineForm");
@@ -100,9 +100,6 @@ medicineForm.addEventListener("submit", function (e) {
 
     // Save medicine to localStorage
     saveMedicine({ medicineName, dose, frequency, alertDate, alertTime });
-
-    // Add to history
-    addHistory(`Added ${medicineName}`);
 });
 
 // Save medicine to localStorage
@@ -112,83 +109,19 @@ function saveMedicine(medicine) {
     localStorage.setItem("medicines", JSON.stringify(medicines));
 }
 
-// Reminder logic for alerting before time
-function checkReminders() {
-    const currentDate = new Date();
-    const medicines = JSON.parse(localStorage.getItem("medicines")) || [];
-
-    medicines.forEach(medicine => {
-        const alertDateTime = new Date(`${medicine.alertDate}T${medicine.alertTime}:00`);
-        const alertTimeBefore = new Date(alertDateTime.getTime() - 30 * 60000); // 30 minutes before
-
-        // Check if it's time for reminder
-        if (currentDate >= alertTimeBefore && currentDate < alertDateTime) {
-            showReminderPopup(medicine);
-        }
-    });
-}
-
-// Show reminder popup
-function showReminderPopup(medicine) {
-    const popup = document.createElement("div");
-    popup.classList.add("popup");
-
-    popup.innerHTML = `
-        <h3>Reminder: Take your medication</h3>
-        <p>You need to take your medicine: ${medicine.medicineName}</p>
-        <button id="pickBtn">Picked</button>
-        <button id="snoozeBtn">Snooze 10 min</button>
-    `;
-
-    document.body.appendChild(popup);
-
-    // Handle "Pick" button (remove from table and storage)
-    document.getElementById("pickBtn").addEventListener("click", function() {
-        popup.remove();
-        deleteMedicine(medicine.medicineName);
-    });
-
-    // Handle "Snooze" button (reschedule reminder for 10 minutes later)
-    document.getElementById("snoozeBtn").addEventListener("click", function() {
-        popup.remove();
-        snoozeReminder(medicine.medicineName);
-    });
-}
-
 // Delete medicine from localStorage and table
+medicineTableBody.addEventListener("click", function (e) {
+    if (e.target.classList.contains("deleteBtn")) {
+        const row = e.target.closest("tr");
+        const medicineName = row.children[0].textContent;
+        deleteMedicine(medicineName);
+        row.remove();
+    }
+});
+
+// Delete medicine from localStorage
 function deleteMedicine(medicineName) {
     let medicines = JSON.parse(localStorage.getItem("medicines")) || [];
     medicines = medicines.filter(medicine => medicine.medicineName !== medicineName);
     localStorage.setItem("medicines", JSON.stringify(medicines));
-
-    // Remove from table
-    const rows = medicineTableBody.querySelectorAll("tr");
-    rows.forEach(row => {
-        if (row.children[0].textContent === medicineName) {
-            row.remove();
-        }
-    });
-
-    // Add to history
-    addHistory(`Removed ${medicineName}`);
 }
-
-// Snooze reminder: add the alert date 10 minutes later
-function snoozeReminder(medicineName) {
-    let medicines = JSON.parse(localStorage.getItem("medicines")) || [];
-    medicines = medicines.map(medicine => {
-        if (medicine.medicineName === medicineName) {
-            const newAlertDate = new Date(medicine.alertDate);
-            newAlertDate.setMinutes(newAlertDate.getMinutes() + 10);  // Add 10 minutes
-            medicine.alertDate = newAlertDate.toISOString();
-        }
-        return medicine;
-    });
-    localStorage.setItem("medicines", JSON.stringify(medicines));
-
-    // Reschedule the check
-    setTimeout(() => showReminderPopup(medicine), 600000);  // 10 minutes later
-}
-
-// Check reminders every minute
-setInterval(checkReminders, 60000); // Check every minute
