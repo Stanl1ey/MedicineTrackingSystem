@@ -30,6 +30,12 @@ if (loginForm) {
         const loginUsername = document.getElementById("loginUsername").value;
         const loginPassword = document.getElementById("loginPassword").value;
 
+        // Show loading state
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Logging in...';
+        submitBtn.disabled = true;
+
         try {
             const response = await fetch(`${API_BASE}/auth.php`, {
                 method: 'POST',
@@ -52,7 +58,12 @@ if (loginForm) {
                 alert(data.message || "Invalid credentials, please try again.");
             }
         } catch (error) {
-            alert("Network error. Please try again.");
+            console.error('Login error:', error);
+            alert("Network error. Please check your connection and try again.");
+        } finally {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     });
 }
@@ -66,6 +77,12 @@ if (registerForm) {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
+        // Show loading state
+        const submitBtn = registerForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Registering...';
+        submitBtn.disabled = true;
+
         try {
             const response = await fetch(`${API_BASE}/auth.php`, {
                 method: 'POST',
@@ -74,8 +91,8 @@ if (registerForm) {
                 },
                 body: JSON.stringify({ 
                     action: 'register',
-                    username, 
-                    password 
+                    username: username, 
+                    password: password 
                 })
             });
 
@@ -83,18 +100,24 @@ if (registerForm) {
 
             if (data.status === 'success') {
                 alert("Registration successful! You can now login.");
-                window.location.href = "login.html";
+                window.location.href = "index.html"; // Redirect to login page
             } else {
                 alert(data.message || "Registration failed. Please try again.");
             }
         } catch (error) {
-            alert("Network error. Please try again.");
+            console.error('Registration error:', error);
+            alert("Network error. Please check your connection and try again.");
+        } finally {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     });
 }
 
 // Initialize auth check
-if (window.location.pathname.includes('login.html') || 
+if (window.location.pathname.includes('index.html') || 
+    window.location.pathname.includes('login.html') || 
     window.location.pathname.includes('register.html')) {
     checkAuth();
 }
