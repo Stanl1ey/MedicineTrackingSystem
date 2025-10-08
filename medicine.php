@@ -1,4 +1,9 @@
 <?php
+// CORS headers at the VERY TOP
+header('Access-Control-Allow-Origin: http://localhost');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json');
+
 require_once 'config.php';
 
 // Check if user is authenticated
