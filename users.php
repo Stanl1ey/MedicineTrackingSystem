@@ -1,4 +1,9 @@
 <?php
+// CORS headers at the VERY TOP
+header('Access-Control-Allow-Origin: http://localhost');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json');
+
 require_once 'config.php';
 
 $user_id = checkAuth();
@@ -13,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($data->action)) {
         switch($data->action) {
             case 'update_profile_pic':
-                // Update profile picture
                 if (!empty($data->profile_pic)) {
                     $query = "UPDATE users SET profile_pic = ? WHERE id = ?";
                     $stmt = $db->prepare($query);
@@ -28,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
 
             case 'get_profile':
-                // Get user profile
                 $query = "SELECT id, username, profile_pic, created_at FROM users WHERE id = ?";
                 $stmt = $db->prepare($query);
                 $stmt->execute([$user_id]);
