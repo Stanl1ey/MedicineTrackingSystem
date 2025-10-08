@@ -1,4 +1,11 @@
 <?php
+// CORS headers must be at the VERY TOP, before any other code
+header('Access-Control-Allow-Origin: http://localhost');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json');
+
+// Now include other files and start session
+session_start();
 require_once 'config.php';
 
 $database = new Database();
@@ -10,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get raw JSON data
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    
+
     // Debug: Log received data
-    error_log("Received data: " . print_r($data, true));
+    error_log("Received data: ". print_r($data, true));
 
     if (isset($data->action)) {
         switch($data->action) {
@@ -119,7 +126,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $response = array("status" => "error", "message" => "Invalid request method");
 }
 
-// Send JSON response
-header('Content-Type: application/json');
 echo json_encode($response);
 ?>
