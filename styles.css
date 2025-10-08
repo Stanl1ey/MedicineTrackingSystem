@@ -1,77 +1,197 @@
-/* Basic Styling (same as before) */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-sizing: border-box;
 }
 
-header {
-    background-color: #2D3E50;
-    color: white;
-    text-align: center;
-    width: 100%;
-    padding: 15px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .container {
-    width: 80%;
-    max-width: 1000px;
-    margin: 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Form Styles */
 .form-container {
-    background-color: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .form-container h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #2D3E50;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .form-group {
-    margin: 15px 0;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 .form-group label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
+    padding: 12px 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
     font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 8px;
+    transition: border-color 0.3s ease;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-primary {
     width: 100%;
-    margin-top: 15px;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-button:hover {
-    background-color: #45a049;
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.form-footer {
+    margin-top: 20px;
+    color: #666;
+}
+
+.form-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Header Styles */
+header {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    color: #333;
+    font-size: 32px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-section {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #667eea;
+    cursor: pointer;
+}
+
+#profilePicInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#usernameDisplay {
+    font-weight: 600;
+    color: #333;
+}
+
+#logoutButton {
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#logoutButton:hover {
+    background: #c82333;
+}
+
+/* Medicine Form */
+.medicine-form {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.medicine-form h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Medicine List */
+.medicine-list {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.medicine-list h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
 }
 
 table {
@@ -80,51 +200,96 @@ table {
     margin-top: 20px;
 }
 
-th, td {
-    padding: 12px;
+table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    font-weight: 600;
 }
 
-th {
-    background-color: #4CAF50;
-    color: white;
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #e1e1e1;
+    color: #555;
+}
+
+table tr:hover {
+    background-color: #f8f9fa;
 }
 
 .deleteBtn {
-    background-color: #f44336;
+    padding: 6px 12px;
+    background: #dc3545;
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .deleteBtn:hover {
-    background-color: #d32f2f;
+    background: #c82333;
 }
 
-/* Popup Styling */
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 9999;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-container {
+        margin: 20px auto;
+        padding: 30px 20px;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    table th,
+    table td {
+        padding: 10px 8px;
+    }
 }
 
-.popup button {
-    margin: 10px;
+/* Loading State */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
 }
 
-#profilePicDisplay {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-top: 20px;
+/* Success Message */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Error Message */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
 }
