@@ -42,7 +42,7 @@ async function initializeApp() {
 // Load profile picture
 async function loadProfilePicture() {
     const profilePicDisplay = document.getElementById("profilePicDisplay");
-    
+
     if (!profilePicDisplay) return;
 
     try {
@@ -113,7 +113,7 @@ if (profilePicInput) {
 // Load medicines from database
 async function loadMedicines() {
     const medicineTableBody = document.querySelector("#medicineTable tbody");
-    
+
     if (!medicineTableBody) return;
 
     try {
@@ -194,7 +194,7 @@ if (medicineForm) {
 
             const data = await response.json();
             console.log("Add medicine response:", data); // Debug log
-            
+
             if (data.status === 'success') {
                 medicineForm.reset();
                 await loadMedicines(); // Reload the medicines list
@@ -231,7 +231,7 @@ if (medicineTableBody) {
                     });
 
                     const data = await response.json();
-                    
+
                     if (data.status === 'success') {
                         await loadMedicines(); // Reload the medicines list
                         alert('Medicine deleted successfully!');
@@ -262,7 +262,7 @@ if (logoutButton) {
                 });
 
                 const data = await response.json();
-                
+
                 if (data.status === 'success') {
                     alert("You have been logged out successfully.");
                     window.location.href = "index.html";
