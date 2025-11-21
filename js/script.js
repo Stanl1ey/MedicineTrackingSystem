@@ -388,7 +388,7 @@ function showAlertPopup(reminder) {
     setTimeout(() => {
         if (popupShown && currentReminder && currentReminder.id === reminder.id) {
             console.log('⏰ Auto-hiding popup after 10 minutes and moving to history');
-            markAsTakenAndClose();
+            closeReminder();
         }
     }, 600000);
 }
@@ -413,23 +413,32 @@ function formatDateTimeForDisplay(dateTimeStr) {
     }
 }
 
-// Mark as taken and close popup
-function markAsTakenAndClose() {
-    if (currentReminder) {
-        console.log('✅ Marking as taken and closing:', currentReminder.medicine_name);
-        
-        // For test reminders, just hide the popup
-        if (currentReminder.id === 999) {
-            hideAlertPopup();
-            return;
-        }
-        
-        // For real reminders, redirect to mark as taken
+// MAIN FIX: Single close function that moves reminder to history
+function closeReminder() {
+    console.log('🔄 closeReminder called, currentReminder:', currentReminder);
+    
+    // Store the reminder ID immediately to prevent timing issues
+    const reminderId = currentReminder ? currentReminder.id : null;
+    
+    if (!reminderId) {
+        console.log('⚠️ No reminder ID found, just hiding popup');
         hideAlertPopup();
-        window.location.href = `?move_to_history=${currentReminder.id}`;
-    } else {
-        hideAlertPopup();
+        return;
     }
+    
+    console.log('✅ Moving reminder to history and closing, ID:', reminderId);
+    
+    // For test reminders, just hide the popup
+    if (reminderId === 999) {
+        hideAlertPopup();
+        return;
+    }
+    
+    // Hide popup immediately
+    hideAlertPopup();
+    
+    // Redirect to move reminder to history
+    window.location.href = `?move_to_history=${reminderId}`;
 }
 
 // Hide alert popup

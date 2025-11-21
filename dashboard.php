@@ -261,7 +261,7 @@ function formatDateTimeForDisplay($datetime) {
             <h3 id="alertMessage">Time for your medicine!</h3>
             <div id="popupDetails" style="margin: 15px 0; text-align: left; background: #f8f9fa; padding: 15px; border-radius: 8px;"></div>
             <div class="popup-buttons">
-                <button onclick="markAsTakenAndClose()" class="btn-close" style="background: #28a745;">Close & Move to History</button>
+                <button onclick="markAsTakenAndClose()" class="btn-taken" style="background: #28a745;">Close & Move to History</button>
             </div>
         </div>
     </div>
