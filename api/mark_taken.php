@@ -2,6 +2,9 @@
 session_start();
 header('Content-Type: application/json');
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Not logged in']);
     exit();
@@ -10,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $reminder_id = isset($_POST['reminder_id']) ? intval($_POST['reminder_id']) : 0;
 
-require 'includes/db.php'; // ✅ FIXED PATH
+require '../includes/db.php';
 
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'error' => 'Database error']);

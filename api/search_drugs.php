@@ -6,6 +6,9 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);

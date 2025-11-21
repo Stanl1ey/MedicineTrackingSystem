@@ -292,26 +292,57 @@ function checkReminders() {
         return;
     }
     
-    console.log('🔍 Checking for reminders...');
+    const now = new Date();
+    console.log('🔍 Checking for reminders at:', now.toString());
     
-    fetch('api/getReminders.php')
+    fetch('api/getReminders.php?debug=1') // Add debug parameter
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();
+            return response.text().then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('❌ Invalid JSON response:', text);
+                    throw new Error('Invalid JSON response from server');
+                }
+            });
         })
-        .then(reminders => {
+        .then(data => {
+            const reminders = data.reminders || data; // Handle both debug and normal modes
+            const debugInfo = data.debug_info;
+            
+            if (debugInfo) {
+                console.log('🐛 DEBUG INFO:', debugInfo);
+            }
+            
             console.log(`✅ Found ${reminders.length} active reminders`);
             
             if (reminders.length > 0 && !popupShown) {
                 const reminder = reminders[0];
                 console.log('🎯 Active reminder:', reminder.medicine_name);
+                console.log('⏰ Time window:', reminder.start_time, 'to', reminder.end_time);
+                
+                // Log current time vs reminder times for debugging
+                const start = new Date(reminder.start_time);
+                const end = new Date(reminder.end_time);
+                console.log('📊 Time Analysis:', {
+                    current: now.toString(),
+                    start: start.toString(), 
+                    end: end.toString(),
+                    isAfterStart: now >= start,
+                    isBeforeEnd: now <= end,
+                    shouldShow: (now >= start && now <= end)
+                });
+                
                 showAlertPopup(reminder);
+            } else {
+                console.log('ℹ️ No active reminders found at current time');
             }
         })
         .catch(error => {
-            console.log('ℹ️ No active reminders found or error:', error);
+            console.log('❌ Error checking reminders:', error.message);
         });
 }
 
