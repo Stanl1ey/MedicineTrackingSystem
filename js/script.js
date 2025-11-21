@@ -228,36 +228,6 @@ function testPopup() {
     showAlertPopup(testReminder);
 }
 
-// Remove completion time section
-function removeCompletionSection() {
-    // Method 1: Find by heading text
-    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6, div, section, p');
-    headings.forEach(element => {
-        if (element.textContent.includes('Completion Time')) {
-            console.log('🗑️ Removing Completion Time section');
-            element.style.display = 'none';
-            // Also try to hide parent elements in case it's nested
-            let parent = element.parentElement;
-            for (let i = 0; i < 3 && parent; i++) {
-                parent.style.display = 'none';
-                parent = parent.parentElement;
-            }
-        }
-    });
-    
-    // Method 2: Remove elements with specific content
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach(element => {
-        const text = element.textContent || '';
-        if (text.includes('Time window expired') || 
-            text.includes('Taken at Nov 21, 2025') || 
-            text.includes('✓ Taken at')) {
-            console.log('🗑️ Removing completion time item');
-            element.style.display = 'none';
-        }
-    });
-}
-
 // Initialize reminder system
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Medicine Tracker initialized');
@@ -267,9 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set default times using local time
     setDefaultLocalTimes();
-    
-    // Remove completion time section
-    removeCompletionSection();
     
     // Check for reminders immediately and then every 10 seconds
     checkReminders();
