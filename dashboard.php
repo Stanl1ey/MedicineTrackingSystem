@@ -178,7 +178,7 @@ function formatDateTimeForDisplay($datetime) {
                 </div>
                 
                 <button type="submit">Add Medicine</button>
-                <button type="button" onclick="setTestTimes()" style="background: #28a745; margin-left: 10px;">Set Quick Test Times</button>
+                <!-- REMOVED: Set Quick Test Times button -->
             </form>
         </div>
 
@@ -227,7 +227,7 @@ function formatDateTimeForDisplay($datetime) {
                             <th>Medicine Name</th>
                             <th>Dosage</th>
                             <th>Time Window</th>
-                            <th>Completion Time</th>
+                            <!-- REMOVED: Completion Time column header -->
                         </tr>
                     </thead>
                     <tbody>
@@ -239,13 +239,7 @@ function formatDateTimeForDisplay($datetime) {
                                     <?php echo formatDateTimeForDisplay($medicine['start_time']); ?> -<br>
                                     <?php echo formatDateTimeForDisplay($medicine['end_time']); ?>
                                 </td>
-                                <td>
-                                    <?php if ($medicine['taken_time']): ?>
-                                        <span style="color: green;">✓ Taken at <?php echo formatDateTimeForDisplay($medicine['taken_time']); ?></span>
-                                    <?php else: ?>
-                                        <span style="color: #666;">Time window expired</span>
-                                    <?php endif; ?>
-                                </td>
+                                <!-- REMOVED: Completion Time data cell -->
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -266,8 +260,7 @@ function formatDateTimeForDisplay($datetime) {
         </div>
     </div>
 
-    <!-- Test Popup Button -->
-    <button class="test-popup-btn" onclick="testPopup()">Test Popup</button>
+    <!-- REMOVED: Test Popup Button -->
 
     <script src="js/script.js"></script>
 </body>
